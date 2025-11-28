@@ -1,46 +1,43 @@
 # Explorador de Países
 
-Una aplicación fullstack para buscar países y gestionar favoritos con autenticación de usuarios.
+Aplicación frontend para buscar países y gestionar favoritos con autenticación de usuarios.
 
-## Tecnologías Utilizadas
+## Repositorios
 
-### Frontend
-- **Next.js 16** (React 19, TypeScript) - Framework principal para el frontend
-- **Tailwind CSS 4** - Framework de estilos CSS
-- **shadcn/ui** - Biblioteca de componentes UI (Button, Card, Input, Dialog, DropdownMenu, etc.)
-- **TanStack Query** - Manejo de estado y queries para datos asíncronos
-- **Axios** - Cliente HTTP para solicitudes API
-- **React Hook Form + Zod** - Validación de formularios
-- **FontAwesome** - Biblioteca de iconos
-- **React Hot Toast** - Notificaciones al usuario
-- **Lucide React** - Iconos adicionales
+- **Frontend**: https://github.com/GermanUNAP/frontend-banderas
+- **Backend**: https://github.com/GermanUNAP/backend-banderas
 
-### Backend
-- **Node.js + Express** - Servidor web con autenticación JWT
-- **MySQL** - Base de datos para usuarios y favoritos
-- **REST Countries API** - Fuente de datos de países
+## Requisitos Previos
 
-### Usuario de Prueba
-Para facilitar las pruebas, puedes usar las siguientes credenciales:
-- Email: usuario@example.com
-- Password: password
-
-## Inicialización del Proyecto
-
-### Prerrequisitos
 - Node.js (versión 18 o superior)
 - npm o yarn
+- MySQL (para la base de datos del backend)
 
-### Configuración del Backend
-1. Asegúrate de que el backend esté ejecutándose en `http://localhost:3001` (consulta el README del backend para instrucciones detalladas).
+## Instalación y Ejecución
 
-### Configuración del Frontend
+### Backend
+El proyecto incluye el backend en la carpeta `../backend`. Para configurarlo:
+
+1. Configurar la base de datos MySQL (ver README del backend)
+2. Instalar dependencias del backend:
+   ```bash
+   cd ../backend
+   npm install
+   ```
+3. Configurar variables de entorno en `../backend/.env`
+4. Iniciar el backend:
+   ```bash
+   npm start
+   ```
+   El backend se ejecutará en `http://localhost:3001`
+
+### Frontend
 1. Instalar dependencias:
    ```bash
    npm install
    ```
 
-2. Copiar el archivo de ejemplo de variables de entorno:
+2. Configurar variables de entorno:
    ```bash
    cp .env.example .env.local
    ```
@@ -52,49 +49,47 @@ Para facilitar las pruebas, puedes usar las siguientes credenciales:
 
 4. Abrir [http://localhost:3000](http://localhost:3000) en el navegador.
 
-## Cómo Funciona la Aplicación
+### Credenciales de Prueba
+- Email: usuario@example.com
+- Password: password
 
-### Flujo General
-La aplicación permite a los usuarios autenticarse, buscar países del mundo y guardar sus favoritos en una base de datos personal.
+## Funcionalidades
 
-### Autenticación de Usuarios
-1. **Registro**: Los usuarios crean una cuenta en `/register` proporcionando nombre, email y contraseña.
-2. **Inicio de Sesión**: En `/login`, los usuarios se autentican con email y contraseña.
-3. **JWT Tokens**: Se utiliza autenticación JWT para proteger las rutas y mantener la sesión del usuario.
-4. **Protección de Rutas**: Las rutas protegidas (`/dashboard`, `/favorites`) requieren autenticación.
-5. **Logout**: Los usuarios pueden cerrar sesión desde el menú del perfil.
+### Autenticación
+- Registro de nuevos usuarios
+- Inicio de sesión con JWT
+- Protección de rutas autenticadas
 
 ### Búsqueda de Países
-1. En el dashboard (`/dashboard`), hay un campo de búsqueda con debounce (800ms) para optimizar las consultas.
-2. Al escribir, se realiza una consulta a la API REST Countries a través del backend.
-3. Los resultados se muestran en tarjetas que incluyen: nombre, bandera, capital, población y región.
-4. Si no se encuentra el país, se muestra una notificación de error.
+- Búsqueda en tiempo real con debounce
+- Datos obtenidos de REST Countries API
+- Información: nombre, bandera, capital, población, región
 
 ### Gestión de Favoritos
-1. **Agregar Favoritos**: Desde el dashboard, los usuarios pueden agregar países a favoritos con un clic.
-2. **Ver Favoritos**: En `/favorites`, se muestran todos los países favoritos del usuario en un grid responsivo.
-3. **Eliminar Favoritos**: Los usuarios pueden remover países de sus favoritos.
-4. **Persistencia**: Los favoritos se almacenan en la base de datos MySQL y se asocian al usuario autenticado.
+- Agregar países a favoritos desde el dashboard
+- Ver lista de favoritos en página dedicada
+- Eliminar países de favoritos
+- Datos persistidos en base de datos MySQL
 
-### Componentes y Arquitectura
-- **Páginas Principales**:
-  - `/` - Página de inicio con enlaces a login/registro
-  - `/login` - Formulario de inicio de sesión
-  - `/register` - Formulario de registro
-  - `/dashboard` - Búsqueda de países y gestión de favoritos
-  - `/favorites` - Visualización y eliminación de favoritos
+## Tecnologías
 
-- **Componentes UI**: Utiliza shadcn/ui para componentes consistentes y accesibles (botones, tarjetas, inputs, diálogos, etc.).
+### Frontend
+- **Next.js 16** (React 19, TypeScript): Framework para React con App Router, SSR y TypeScript
+- **Tailwind CSS 4**: Framework de CSS utility-first para estilos
+- **shadcn/ui**: Componentes UI reutilizables y accesibles
+- **TanStack Query**: Gestión de estado y caching para consultas API
+- **Axios**: Cliente HTTP para peticiones al backend
+- **React Hook Form + Zod**: Validación de formularios con schemas TypeScript
+- **FontAwesome**: Biblioteca de iconos
 
-- **Manejo de Estado**: TanStack Query para caching, sincronización y manejo eficiente de las consultas API.
+### Backend
+- **Node.js + Express**: Servidor web con middleware y rutas API
+- **MySQL**: Base de datos relacional para usuarios y favoritos
+- **JWT Authentication**: Autenticación stateless con tokens JSON Web Token
+- **REST Countries API**: API externa para obtener datos de países
 
-- **API Layer**:
-  - `lib/api.ts` - Funciones para interactuar con el backend (auth, countries, favorites)
-  - `lib/queries.ts` - Hooks de TanStack Query para las operaciones CRUD
-  - `types/index.ts` - Interfaces TypeScript para tipado fuerte
-
-### Documentación de la API
-La documentación completa de la API REST está disponible en http://localhost:3001/api-docs usando Swagger UI.
+### Autenticación JWT
+La aplicación utiliza JWT para mantener sesiones de usuario. Los tokens se almacenan en sessionStorage del navegador y se incluyen automáticamente en las cabeceras de las peticiones API autenticadas.
 
 ## Estructura del Proyecto
 
