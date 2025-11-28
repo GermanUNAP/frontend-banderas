@@ -32,14 +32,14 @@ El proyecto incluye el backend en la carpeta `../backend`. Para configurarlo:
    El backend se ejecutará en `http://localhost:3001`
 
 ### Frontend
-1. Instalar dependencias:
-   ```bash
-   npm install
-   ```
-
-2. Configurar variables de entorno:
+1. Configurar variables de entorno:
    ```bash
    cp .env.example .env.local
+   ```
+
+2. Instalar dependencias:
+   ```bash
+   npm install
    ```
 
 3. Iniciar el servidor de desarrollo:
